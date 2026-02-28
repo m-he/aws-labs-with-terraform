@@ -1,0 +1,44 @@
+########################################
+# Terraform working directories & cache
+########################################
+.terraform/                 # provider plugins, module cache
+.terraform.tfstate.*.backup # CLI tmp backups created during moves
+
+########################################
+# Terraform state & plan artifacts
+########################################
+*.tfstate
+*.tfstate.*
+*.tfplan                     # binary plan files from “terraform plan -out”
+*.tfapply                    # rare apply files
+
+########################################
+# Sensitive variable definitions
+########################################
+*.tfvars
+*.tfvars.json
+
+########################################
+# Crash diagnostics & CLI internals
+########################################
+crash.log
+crash.*.log
+terraform.tfstate.lock.info  # local lock record
+*_override.tf
+*_override.tf.json
+override.tf
+override.tf.json
+
+########################################
+# Terragrunt & helpers (optional)
+########################################
+.terragrunt-cache/
+.terragrunt-debug.tfvars
+
+########################################
+# OS / editor noise (adjust to taste)
+########################################
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
