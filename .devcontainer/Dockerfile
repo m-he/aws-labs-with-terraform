@@ -1,5 +1,5 @@
 # Use lightweight Python base image
-FROM python:3.12-bookworm
+FROM python:3.13-bookworm
 
 # Define non-root user
 ARG USERNAME
@@ -14,7 +14,7 @@ ENV PATH=${HOME}/.local/bin:$PATH \
 # Install system deps and create user
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       sudo zsh git curl \
+       sudo zsh git curl groff\
        apt-transport-https ca-certificates gnupg software-properties-common lsb-release \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -ms /bin/zsh ${USERNAME} \

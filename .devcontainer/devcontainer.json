@@ -14,10 +14,11 @@
 				"ms-vscode.copilot-mermaid-diagram",
 				"ms-vscode.vscode-websearchforcopilot",
 				"MermaidChart.vscode-mermaid-chart",
-				"HashiCorp.terraform"
+				"HashiCorp.terraform",
+				"DavidAnson.vscode-markdownlint"
 			]
 		}
-	},
+    },
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -26,7 +27,8 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig",
+	"postCreateCommand": ".devcontainer/install_aws.sh; .devcontainer/install_k8s_tools.sh",
+	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; ",
 
 	// Configure tool-specific properties.
 	// "customizations": {}
