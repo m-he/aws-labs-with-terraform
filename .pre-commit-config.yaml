@@ -14,7 +14,7 @@ repos:
         verbose: true
       - id: infracost_breakdown
         args:
-          - --args=--path=./stacks/aws-rumpup
+          - --args=--path=./stacks/aws-iac
         verbose: true        
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.0
