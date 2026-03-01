@@ -1,8 +1,8 @@
 ########################################
 # Terraform working directories & cache
 ########################################
-.terraform/                 # provider plugins, module cache
-.terraform.tfstate.*.backup # CLI tmp backups created during moves
+**/.terraform/
+**/.terraform.tfstate.*.backup # CLI tmp backups created during moves
 
 ########################################
 # Terraform state & plan artifacts

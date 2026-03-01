@@ -4,6 +4,7 @@ FROM python:3.13-bookworm
 # Define non-root user
 ARG USERNAME
 ENV USERNAME=${USERNAME:-"vscode"}
+
 RUN echo "Using USERNAME: ${USERNAME}"
 
 ENV HOME=/home/${USERNAME}
@@ -14,7 +15,7 @@ ENV PATH=${HOME}/.local/bin:$PATH \
 # Install system deps and create user
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       sudo zsh git curl groff\
+       sudo zsh git curl groff wget\
        apt-transport-https ca-certificates gnupg software-properties-common lsb-release \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -ms /bin/zsh ${USERNAME} \
@@ -31,16 +32,7 @@ RUN apt-get update \
     && chmod +x /usr/local/bin/jq \
     && curl -L -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/${YQ_ARCH}" \
     && chmod +x /usr/local/bin/yq \
-    \
-    # Add HashiCorp Terraform repo
-    && curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
-    && echo "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com \
-            $(lsb_release -cs) main" \
-       > /etc/apt/sources.list.d/hashicorp.list \
-    \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-       terraform \
+    && pip install pre-commit \
     && rm -rf /var/lib/apt/lists/*
 
 # Switch to non-root user and set working directory
