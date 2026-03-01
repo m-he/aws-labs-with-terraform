@@ -28,7 +28,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": ".devcontainer/install_aws.sh; .devcontainer/install_k8s_tools.sh",
-	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; ",
+	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; "
 
 	// Configure tool-specific properties.
 	// "customizations": {}
