@@ -6,7 +6,7 @@ repos:
       - id: terraform_validate
       - id: terraform_tflint
         args:
-          - --config=__GIT_WORKING_DIR__/.tflint.hcl
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
       - id: terraform_docs
       - id: infracost_breakdown
         args:
@@ -19,4 +19,4 @@ repos:
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.0
     hooks:
-      - id: gitleaks-system
+      - id: gitleaks

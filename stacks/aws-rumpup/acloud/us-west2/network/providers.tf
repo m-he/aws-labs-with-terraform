@@ -11,7 +11,7 @@ terraform {
       version = "~> 6.30"
     }
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = "~> 3.1"
     }
     kubernetes = {
@@ -19,12 +19,10 @@ terraform {
       version = "~> 2.30"
     }
   }
-   cloud { 
-    
-    organization = "aws-labs" 
-
-    workspaces { 
-      name = "dev" 
-    } 
+  cloud {
+    organization = "aws-labs"
+    workspaces {
+      name = "dev"
+    }
   }
 }

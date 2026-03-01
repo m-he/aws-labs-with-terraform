@@ -2,7 +2,10 @@
 # Terraform working directories & cache
 ########################################
 **/.terraform/
-**/.terraform.tfstate.*.backup # CLI tmp backups created during moves
+**/.infracost/
+
+**/.terraform.tfstate.*.backup
+
 
 ########################################
 # Terraform state & plan artifacts
