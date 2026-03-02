@@ -19,13 +19,13 @@ repos:
           - --args=--config=__GIT_WORKING_DIR__/.terraform-docs.yml
         files: ^(modules|stacks/aws-iac)/
       - id: infracost_breakdown
-        stages: [push]
+        stages: [pre-push]
         files: ^modules/
         args:
           - --args=--path=./modules
         verbose: true
       - id: infracost_breakdown
-        stages: [push]
+        stages: [pre-push]
         files: ^stacks/aws-iac/
         args:
           - --args=--path=./stacks/aws-iac
