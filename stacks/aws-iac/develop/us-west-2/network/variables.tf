@@ -2,13 +2,14 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 locals {
-  cluster_name = "${var.project}-${var.env}-${var.region}-eks"
+  cluster_name = "${var.project}-eks"
   azs          = slice(data.aws_availability_zones.available.names, 0, 2)
   az_map       = { for idx, az in local.azs : az => idx }
 
   common_tags = merge(var.tags, {
     Environment = var.env
     Project     = var.project
+    Region      = var.region
     Terraform   = "true"
   })
 }
