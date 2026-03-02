@@ -2,8 +2,7 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 locals {
-  region       = "us-west-2"
-  cluster_name = "${var.env}-${var.eks_name}"
+  cluster_name = "${var.project}-${var.env}-${var.region}-eks"
   azs          = slice(data.aws_availability_zones.available.names, 0, 2)
   az_map       = { for idx, az in local.azs : az => idx }
 
@@ -14,7 +13,10 @@ locals {
 }
 
 variable "env" { type = string }
-variable "eks_name" { type = string }
+variable "region" { type = string }
+variable "project" {
+  type = string
+}
 
 variable "vpc_cidr" {
   type    = string
