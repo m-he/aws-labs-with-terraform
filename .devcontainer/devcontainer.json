@@ -42,7 +42,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	"postCreateCommand": ".devcontainer/install_k8s_tools.sh",
+	"postCreateCommand": ".devcontainer/install_k8s_tools.sh && .devcontainer/install_pre_commit.sh",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; "
 
