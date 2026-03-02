@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-vpc"
+    Name = "${var.project}-vpc"
   })
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "private" {
   cidr_block        = cidrsubnet(var.vpc_cidr, 2, each.value)
 
   tags = merge(local.common_tags, {
-    Name                                          = "${local.cluster_name}-private-${each.key}"
+    Name                                          = "${var.project}-private-${each.key}"
     "kubernetes.io/role/internal-elb"             = "1"
     "kubernetes.io/cluster/${local.cluster_name}" = var.cluster_tag_value
   })
@@ -29,7 +29,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = merge(local.common_tags, {
-    Name                                          = "${local.cluster_name}-public-${each.key}"
+    Name                                          = "${var.project}-public-${each.key}"
     "kubernetes.io/role/elb"                      = "1"
     "kubernetes.io/cluster/${local.cluster_name}" = var.cluster_tag_value
   })
@@ -39,7 +39,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-igw"
+    Name = "${var.project}-igw"
   })
 }
 
@@ -48,7 +48,7 @@ resource "aws_eip" "nat" {
   domain   = "vpc"
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-nat-eip-${each.key}"
+    Name = "${var.project}-nat-eip-${each.key}"
   })
 }
 
@@ -60,7 +60,7 @@ resource "aws_nat_gateway" "nat" {
   depends_on = [aws_internet_gateway.igw]
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-nat-${each.key}"
+    Name = "${var.project}-nat-${each.key}"
   })
 }
 
@@ -73,7 +73,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-rt-public"
+    Name = "${var.project}-rt-public"
   })
 }
 
@@ -93,7 +93,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "${local.cluster_name}-rt-private-${each.key}"
+    Name = "${var.project}-rt-private-${each.key}"
   })
 }
 
