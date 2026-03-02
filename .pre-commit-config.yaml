@@ -20,11 +20,13 @@ repos:
         files: ^(modules|stacks/aws-iac)/
       - id: infracost_breakdown
         stages: [pre-push]
+        files: ^modules/
         args:
           - --args=--path=./modules
         verbose: true
       - id: infracost_breakdown
         stages: [pre-push]
+        files: ^stacks/aws-iac/
         args:
           - --args=--path=./stacks/aws-iac
         verbose: true
