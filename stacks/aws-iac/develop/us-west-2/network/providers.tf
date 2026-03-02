@@ -22,7 +22,7 @@ terraform {
   cloud {
     organization = "aws-labs"
     workspaces {
-      name = "dev"
+      name = "develop-network"
     }
   }
 }

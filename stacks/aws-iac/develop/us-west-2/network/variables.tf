@@ -9,6 +9,7 @@ locals {
   common_tags = merge(var.tags, {
     Environment = var.env
     Project     = var.project
+    Component   = var.component
     Region      = var.region
     Terraform   = "true"
   })
@@ -16,9 +17,8 @@ locals {
 
 variable "env" { type = string }
 variable "region" { type = string }
-variable "project" {
-  type = string
-}
+variable "project" { type = string }
+variable "component" { type = string }
 
 variable "vpc_cidr" {
   type    = string
