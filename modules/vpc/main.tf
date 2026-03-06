@@ -6,6 +6,12 @@ terraform {
       version = "~> 6.30"
     }
   }
+  cloud {
+    organization = "aws-labs"
+    workspaces {
+      name = "develop-network"
+    }
+  }
 }
 
 data "aws_availability_zones" "available" {
