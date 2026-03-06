@@ -30,6 +30,21 @@ repos:
         args:
           - --args=--path=./stacks/aws-iac
         verbose: true
+      - id: terraform_trivy
+        files: ^(modules|stacks/aws-iac)/
+        args:
+          - --args=--quiet
+          - --args=--format=table
+          - --args=--severity HIGH,CRITICAL
+      - id: terraform_checkov
+        args:
+          - --args=--quiet
+          - --args=-d modules
+          - --args=-d stacks/aws-iac
+          - --args=--compact
+          - --args=--skip-check CKV_AWS_130
+          - --args=--skip-check CKV2_AWS_12
+          - --args=--skip-check CKV2_AWS_11
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.0
     hooks:

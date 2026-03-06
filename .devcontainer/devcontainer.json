@@ -5,7 +5,7 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"build": {
 		"dockerfile": "Dockerfile",
-		"args": { "USERNAME": "${localEnv:USER}${localEnv:USERNAME}"}
+		"args": { "USERNAME": "${localEnv:USER}${localEnv:USERNAME}" }
 	},
 	"customizations": {
 		"vscode": {
@@ -18,33 +18,20 @@
 				"DavidAnson.vscode-markdownlint"
 			]
 		}
-    },
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
 	"features": {
-		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/devcontainers/features/terraform:1.4.2": {
-			"version": "latest",
-			"tflint": "latest",
-			"terragrunt": "latest",
-			"installTerraformDocs": true,
-			"installTfsec": true,
-			"installSentinel": true
-		},
     	"ghcr.io/jsburckhardt/devcontainer-features/gitleaks:1.0.0": {},
-		"ghcr.io/devcontainers/features/aws-cli:1": {},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-			"version": "latest",
-			"helm": "latest"
-		},
 		 "ghcr.io/devcontainers-extra/features/infracost:1": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	"postCreateCommand": ".devcontainer/install_k8s_tools.sh && .devcontainer/install_pre_commit.sh",
+
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; "
+	"postStartCommand": "sed -i.bak '/^\\[gpg \"ssh\"\\]/d; /op-ssh-sign/d; ' ~/.gitconfig; pre-commit install && pre-commit install --hook-type pre-push"
 
 	// Configure tool-specific properties.
 	// "customizations": {}
