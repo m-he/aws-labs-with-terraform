@@ -7,6 +7,7 @@
 		"dockerfile": "Dockerfile",
 		"args": { "USERNAME": "${localEnv:USER}${localEnv:USERNAME}" }
 	},
+	"remoteUser": "${localEnv:USER}${localEnv:USERNAME}",
 	"customizations": {
 		"vscode": {
 			"extensions": [
