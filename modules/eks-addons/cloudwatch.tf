@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "CloudWatchAgentServerPolicy" {
 resource "aws_eks_addon" "cloudwatch" {
   cluster_name  = var.eks_cluster_name
   addon_name    = "amazon-cloudwatch-observability"
-  addon_version = "v4.10.1-eksbuild.1"
+  addon_version = "v5.2.1-eksbuild.1"
   pod_identity_association {
     role_arn        = aws_iam_role.cloudwatch_observability.arn
     service_account = "cloudwatch-agent"

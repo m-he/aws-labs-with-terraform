@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "ebs_csi_driver" {
 resource "aws_eks_addon" "ebs_csi_driver" {
   cluster_name             = var.eks_cluster_name
   addon_name               = "aws-ebs-csi-driver"
-  addon_version            = "v1.55.0-eksbuild.2"
+  addon_version            = "v1.56.0-eksbuild.1"
   service_account_role_arn = aws_iam_role.ebs_csi_driver.arn
 
   pod_identity_association {
