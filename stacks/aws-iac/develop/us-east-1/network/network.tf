@@ -103,8 +103,81 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[each.key].id
 }
 
-data "aws_kms_alias" "cloudwatch_logs" {
-  name = "alias/aws/logs"
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+resource "aws_kms_key" "cloudwatch_logs" {
+  description         = "${var.project}-${var.env} CMK for CloudWatch Logs encryption"
+  enable_key_rotation = true
+
+  tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.env}-cloudwatch-logs-key"
+  })
+}
+
+data "aws_iam_policy_document" "kms_cloudwatch_logs" {
+  statement {
+    sid    = "AllowKeyAdministration"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+    }
+
+    actions = [
+      "kms:Create*",
+      "kms:Describe*",
+      "kms:Enable*",
+      "kms:List*",
+      "kms:Put*",
+      "kms:Update*",
+      "kms:Revoke*",
+      "kms:Disable*",
+      "kms:Get*",
+      "kms:Delete*",
+      "kms:TagResource",
+      "kms:UntagResource",
+      "kms:ScheduleKeyDeletion",
+      "kms:CancelKeyDeletion",
+    ]
+    resources = [aws_kms_key.cloudwatch_logs.arn]
+  }
+
+  statement {
+    sid    = "AllowCloudWatchLogsEncryption"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+    }
+
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey",
+    ]
+    resources = [aws_kms_key.cloudwatch_logs.arn]
+
+    condition {
+      test     = "ArnLike"
+      variable = "kms:EncryptionContext:aws:logs:arn"
+      values   = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:*"]
+    }
+  }
+}
+
+resource "aws_kms_key_policy" "cloudwatch_logs" {
+  key_id = aws_kms_key.cloudwatch_logs.id
+  policy = data.aws_iam_policy_document.kms_cloudwatch_logs.json
+}
+
+resource "aws_kms_alias" "cloudwatch_logs" {
+  name          = "alias/${var.project}-${var.env}-cloudwatch-logs"
+  target_key_id = aws_kms_key.cloudwatch_logs.key_id
 }
 
 data "aws_iam_policy_document" "vpc_flow_logs_assume_role" {
@@ -133,7 +206,7 @@ data "aws_iam_policy_document" "vpc_flow_logs_to_cloudwatch" {
 
 resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
   name              = "/aws/vpc/${var.project}-${var.env}-flow-logs"
-  kms_key_id        = data.aws_kms_alias.cloudwatch_logs.target_key_arn
+  kms_key_id        = aws_kms_key.cloudwatch_logs.arn
   retention_in_days = var.vpc_flow_log_retention_in_days
 
   tags = merge(local.common_tags, {
