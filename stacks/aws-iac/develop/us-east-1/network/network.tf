@@ -104,7 +104,6 @@ resource "aws_route_table_association" "private" {
 }
 
 data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
 
 resource "aws_kms_key" "cloudwatch_logs" {
   description         = "${var.project}-${var.env} CMK for CloudWatch Logs encryption"
@@ -150,7 +149,7 @@ data "aws_iam_policy_document" "kms_cloudwatch_logs" {
 
     principals {
       type        = "Service"
-      identifiers = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+      identifiers = ["logs.${var.region}.amazonaws.com"]
     }
 
     actions = [
@@ -165,7 +164,7 @@ data "aws_iam_policy_document" "kms_cloudwatch_logs" {
     condition {
       test     = "ArnLike"
       variable = "kms:EncryptionContext:aws:logs:arn"
-      values   = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:*"]
+      values   = ["arn:aws:logs:${var.region}:${data.aws_caller_identity.current.account_id}:log-group:*"]
     }
   }
 }
