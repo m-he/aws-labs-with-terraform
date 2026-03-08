@@ -42,3 +42,8 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "eks_version" {
+  type    = string
+  default = "1.34"
+}
