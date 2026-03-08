@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Export TF_VARs based on path:
-# /workspaces/aws-labs-with-terraform/stacks/<project>/<env>/<region>/<component>
-
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 component_dir="$(dirname -- "$script_dir")"
 region_dir="$(dirname -- "$component_dir")"
