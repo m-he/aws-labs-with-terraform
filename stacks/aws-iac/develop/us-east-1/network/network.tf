@@ -19,3 +19,10 @@ module "eks" {
   private_subnet_ids      = module.network.private_subnet_ids
   eks_public_access_cidrs = ["70.190.232.143/32"]
 }
+
+module "eks-addon" {
+  source              = "../../../../../modules/eks-addons"
+  eks_cluster_name    = module.eks.eks_cluster_name
+  eks_node_group_name = module.eks.eks_node_group_name
+  vpc_id              = module.network.vpc_id
+}
