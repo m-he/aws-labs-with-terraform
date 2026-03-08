@@ -179,6 +179,16 @@ resource "aws_kms_alias" "cloudwatch_logs" {
   target_key_id = aws_kms_key.cloudwatch_logs.key_id
 }
 
+resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
+  name              = "/aws/vpc/${var.project}-${var.env}-flow-logs"
+  kms_key_id        = aws_kms_key.cloudwatch_logs.arn
+  retention_in_days = var.vpc_flow_log_retention_in_days
+
+  tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.env}-vpc-flow-logs"
+  })
+}
+
 data "aws_iam_policy_document" "vpc_flow_logs_assume_role" {
   statement {
     effect = "Allow"
@@ -201,16 +211,6 @@ data "aws_iam_policy_document" "vpc_flow_logs_to_cloudwatch" {
     ]
     resources = ["${aws_cloudwatch_log_group.vpc_flow_logs.arn}:*"]
   }
-}
-
-resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
-  name              = "/aws/vpc/${var.project}-${var.env}-flow-logs"
-  kms_key_id        = aws_kms_key.cloudwatch_logs.arn
-  retention_in_days = var.vpc_flow_log_retention_in_days
-
-  tags = merge(local.common_tags, {
-    Name = "${var.project}-${var.env}-vpc-flow-logs"
-  })
 }
 
 resource "aws_iam_role" "vpc_flow_logs" {
