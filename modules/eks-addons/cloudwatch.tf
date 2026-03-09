@@ -31,26 +31,5 @@ resource "aws_eks_addon" "cloudwatch" {
     role_arn        = aws_iam_role.cloudwatch_observability.arn
     service_account = "cloudwatch-agent"
   }
-  configuration_values = <<CONFIG
-  {
-    "agent": {
-        "config": {
-            "logs": {
-                "metrics_collected": {
-                    "kubernetes": {
-                        "kueue_container_insights": true,
-                        "enhanced_container_insights": true
-                    },
-                    "application_signals": { }
-                }
-            },
-            "traces": {
-                "traces_collected": {
-                    "application_signals": { }
-                }
-            }
-        },
-    },
-}
-CONFIG
+  configuration_values = file("${path.module}/values/addon_cloudwatch_config.json")
 }
