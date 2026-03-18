@@ -25,4 +25,7 @@ module "eks-addon" {
   eks_cluster_name    = module.eks.eks_cluster_name
   eks_node_group_name = module.eks.eks_node_group_name
   vpc_id              = module.network.vpc_id
+  region              = var.region
+
+  depends_on = [module.eks]
 }

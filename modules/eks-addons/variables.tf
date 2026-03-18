@@ -9,3 +9,7 @@ variable "eks_node_group_name" {
 variable "vpc_id" {
   type = string
 }
+
+variable "region" {
+  type = string
+}

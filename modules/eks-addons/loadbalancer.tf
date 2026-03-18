@@ -44,6 +44,9 @@ resource "helm_release" "aws_lbc" {
   namespace  = "kube-system"
   version    = "3.1.0"
 
+  wait    = true
+  timeout = 600
+
   set = [{
     name  = "clusterName"
     value = var.eks_cluster_name
@@ -57,4 +60,9 @@ resource "helm_release" "aws_lbc" {
       name  = "vpcId"
       value = var.vpc_id
   }]
+
+  depends_on = [
+    data.aws_eks_node_group.this,
+    aws_eks_pod_identity_association.aws_lbc,
+  ]
 }

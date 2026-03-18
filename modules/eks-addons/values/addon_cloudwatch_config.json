@@ -1,4 +1,4 @@
-  {
+{
     "agent": {
         "config": {
             "logs": {
@@ -7,14 +7,14 @@
                         "kueue_container_insights": true,
                         "enhanced_container_insights": true
                     },
-                    "application_signals": { }
+                    "application_signals": {}
                 }
             },
             "traces": {
                 "traces_collected": {
-                    "application_signals": { }
+                    "application_signals": {}
                 }
             }
-        },
-    },
+        }
+    }
 }
