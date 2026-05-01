@@ -39,10 +39,9 @@ terraform {
       version = "~> 2.30"
     }
   }
-  cloud {
-    organization = "aws-labs"
-    workspaces {
-      name = "develop-network"
-    }
+  backend "s3" {
+    key          = "develop/us-east-1/network/terraform.tfstate"
+    use_lockfile = true
+    encrypt      = true
   }
 }
