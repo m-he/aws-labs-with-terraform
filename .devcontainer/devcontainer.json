@@ -12,7 +12,6 @@
 		"vscode": {
 			"extensions": [
 				"eamodio.gitlens",
-				"ms-vscode.copilot-mermaid-diagram",
 				"ms-vscode.vscode-websearchforcopilot",
 				"MermaidChart.vscode-mermaid-chart",
 				"HashiCorp.terraform",
