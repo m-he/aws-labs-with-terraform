@@ -23,10 +23,7 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-	"features": {
-    	"ghcr.io/jsburckhardt/devcontainer-features/gitleaks:1.0.0": {},
-		 "ghcr.io/devcontainers-extra/features/infracost:1": {}
-	},
+	"features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

@@ -26,7 +26,7 @@ RUN apt-get update \
         aarch64) JQ_ARCH="jq-linuxarm64"; YQ_ARCH="yq_linux_arm64"; ;; \
         *) echo "Unsupported architecture: ${ARCH}"; exit 1 ;; \
     esac \
-    && curl -L -o /usr/local/bin/jq "https://github.com/stedolan/jq/releases/latest/download/${JQ_ARCH}" \
+    && curl -L -o /usr/local/bin/jq "https://github.com/jqlang/jq/releases/latest/download/${JQ_ARCH}" \
     && chmod +x /usr/local/bin/jq \
     && curl -L -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/${YQ_ARCH}" \
     && chmod +x /usr/local/bin/yq \
@@ -61,6 +61,7 @@ RUN ARCH=$(uname -m) \
     && curl -L "$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E -m 1 "https://.+?_linux_${ARCH}.zip")" > tflint.zip && unzip tflint.zip && rm tflint.zip && mv tflint /usr/bin/ \
     && curl -L "$(curl -s https://api.github.com/repos/infracost/infracost/releases/latest | grep -o -E -m 1 "https://.+?-linux-${ARCH}.tar.gz")" > infracost.tgz && tar -xzf infracost.tgz && rm infracost.tgz && mv infracost-linux-${ARCH} /usr/bin/infracost \
     && curl -L "$(curl -s https://api.github.com/repos/minamijoyo/tfupdate/releases/latest | grep -o -E -m 1 "https://.+?_linux_${ARCH}.tar.gz")" > tfupdate.tar.gz && tar -xzf tfupdate.tar.gz tfupdate && rm tfupdate.tar.gz && mv tfupdate /usr/bin/ \
+    && curl -L "$(curl -s https://api.github.com/repos/gitleaks/gitleaks/releases/latest | grep -o -E -m 1 "https://.+?_linux_${ARCH}.tar.gz")" > gitleaks.tar.gz && tar -xzf gitleaks.tar.gz gitleaks && rm gitleaks.tar.gz && mv gitleaks /usr/bin/ \
     && curl -L -o opa "https://openpolicyagent.org/downloads/latest/opa_linux_${ARCH}" && chmod +x opa && mv opa /usr/bin/opa
 
 # Switch to non-root user and set working directory
